@@ -18,6 +18,7 @@
   "homepage": "https://github.com/ganzabruce/ExpressAuthentication#readme",
   "description": "",
   "dependencies": {
+    "connect-mongo": "^5.1.0",
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
