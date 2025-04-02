@@ -8,5 +8,5 @@ router.get('/signup',controllers.signUp)
 router.get('/adminDashboard',controllers.adminDashboard)
 router.get('/userDashboard',controllers.signUp)
 router.post('/signin',controllers.postSignin)
-router.post('/signup',controllers.postSignup)
+router.post('/signup',controllers.saveAdmin)
 module.exports = router 

@@ -2,10 +2,15 @@ require('dotenv').config()
 const express = require('express')
 const app =  express()
 const cookieParser =  require('cookie-parser')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 const mongoose =  require('mongoose')
 const MongoStore = require('connect-mongo')
+const session = require('express-session')
 const routerPath =  require('./routes/router')
 PORT = process.env.PORT
+
+
 //connection
 mongoose.connect(process.env.MONGODB_URI)
  .then(()=>{
@@ -20,18 +25,20 @@ mongoose.connect(process.env.MONGODB_URI)
 app.use(express.urlencoded({extended:true}))
 app.use(express.static('public'))
 app.use(cookieParser())
+app.use(express.json())
 app.set('view engine','ejs')
 
 
-app.use(session({ 
+app.use(session({  
     secret: 'hello ganza',
-    resave: false,
-    saveUnitialised: true,
-    store:MongoStore.create({
-        mongoUrl:process.env.MONGODB_URI
+    resave: false,  
+    saveUninitialized: true, 
+    store: MongoStore.create({  
+        mongoUrl: process.env.MONGODB_URI  
     })
-}))
+}));  
 //routes
+
 app.get('/signin',routerPath)
 app.get('/signup',routerPath)
 app.get('/adminDashboard',routerPath)
