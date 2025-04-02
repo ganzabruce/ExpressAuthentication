@@ -2,7 +2,9 @@ const mongoose =  require('mongoose')
 const Admin = require('../models/Admin')
 const User = require('../models/User')
 const express  =  require('express')
+const jwt= require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const JWT_SECRET = process.env.JWT_SECRET
 
 
 const signIn = (req,res)=>{
@@ -31,7 +33,7 @@ const saveAdmin = async (req,res)=>{
                 name: username,
                 password: hashedPassword
             })
-            res.status(201).json({ message : "user created"})
+            res.status(201).json({ message : "user created" , admin})
             res.redirect('/adminDashboard')
         } catch (error) {
             if(error.code === 11000){
@@ -44,6 +46,31 @@ const saveAdmin = async (req,res)=>{
         console.log(error)
     }
 }
+
+
+const getAdmin = async(req,res) =>{
+    try{
+        const {username , password } = req.body 
+        const user = await Admin.findOne({name : username})
+        if (!user) {
+            return res.json({message:"invalid username"})
+        }
+        isPasswordvalid = await bcrypt.compare(password,user.password)
+        if (!isPasswordvalid) {
+            return res.json({message:"invalid password"})
+        }
+        const token = jwt.sign({userId: user._id},JWT_SECRET)
+        res.cookie('token',token,{httpOnly:true})
+        res.redirect('adminDashboard')
+    
+    }catch(err){
+        console.log(err)
+    }
+}
+
+
+
+
 const postSignin = (req,res)=>{
     var { username ,password} = req.body
     res.redirect('/adminDashboard')
@@ -56,7 +83,7 @@ const postSignup = (req,res)=>{
 module.exports = {
     signIn,
     signUp,
-    postSignin,
+    getAdmin,
     postSignup,
     userDashboard,
     adminDashboard,

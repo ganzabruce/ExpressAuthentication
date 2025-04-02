@@ -7,8 +7,8 @@ const adminSchema = new Schema({
     password: { type: String, required: true },  
     role: {   
         type: String,   
-        enum: ['admin', 'editor', 'viewer'], // Specify your roles here  
-        default: 'admin', // Set a default role if needed  
+        enum: ['admin', 'editor', 'viewer'], 
+        default: 'admin', 
         required: true   
     }  
 }); 
