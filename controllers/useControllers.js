@@ -22,7 +22,6 @@ const signUp = (req,res)=>{
 }
 
 
-
 const saveAdmin = async (req,res)=>{
     try {
         
