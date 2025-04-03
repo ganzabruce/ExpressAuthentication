@@ -11,6 +11,7 @@ router.get('/signin/admin',adminControllers.signInAdmin)
 router.get('/signup/admin',adminControllers.signUpAdmin)
 router.get('/signin/user',userControllers.signInUser)
 router.get('/signup/user',userControllers.signUpUser)
+router.get('/add-post',userControllers.addPost)
 
 //pages
 router.get('/adminDashboard',adminControllers.adminDashboard)
@@ -22,4 +23,5 @@ router.post('/signin/admin',adminControllers.getAdmin)
 router.post('/signup/admin',adminControllers.saveAdmin)
 router.post('/signin/user',userControllers.getUser)
 router.post('/signup/user',userControllers.saveUser)
+router.post('/add-post',userControllers.submitPost)
 module.exports = router 

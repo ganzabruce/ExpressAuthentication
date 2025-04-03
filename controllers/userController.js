@@ -2,6 +2,7 @@ const User = require('../models/User')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const JWT_SECRET = process.env.JWT_SECRET
+const Post = require('../models/post')
 
 //admin
 const signInUser = (req,res)=>{
@@ -10,8 +11,17 @@ const signInUser = (req,res)=>{
 const signUpUser = (req,res)=>{
     res.render('signupUser')
 }
-const userDashboard = (req,res)=>{
-    res.render('userDashboard')
+const userDashboard = async(req,res)=>{
+    try {
+        const userToken = req.cookies.userToken
+        const verifiedUser = jwt.verify(userToken,JWT_SECRET)
+        const user = await User.findById(verifiedUser.userId)
+        const posts = await Post.find()
+        res.render('userDashboard', { userName: user.name,posts });
+
+    } catch (error) {
+        console.log(error)
+    }
 }
 const saveUser = async (req,res)=>{
     try {    
@@ -26,8 +36,7 @@ const saveUser = async (req,res)=>{
                 name: username,
                 password: hashedPassword
             })
-            res.status(201).json({ message : "user created" , user})
-            res.redirect('/adminDashboard')
+            res.redirect('/signup/user')
         } catch (error) {
             if(error.code === 11000){
                 res.status(409).json({message:"user already in use"})
@@ -60,11 +69,48 @@ const getUser= async(req,res) =>{
         console.log(err)
     }
 }
+const addPost = (req,res)=>{
+    res.render('createPost')
+}
+const submitPost = async (req,res) =>{
+    try {
+        const userToken = req.cookies.userToken;
+        const verifiedUser = jwt.verify(userToken, JWT_SECRET)
+        const user = await User.findById(verifiedUser.userId);
+        const userName = user.name
+        const {postTitle , postBody} = req.body
+        try {
+            const post = await new Post({
+                postTitle: postTitle,
+                postBody: postBody,
+                createdBy: userName
+            })
+            post.save()
+             .then(()=>{
+                 res.redirect('/userDashboard')
+             }).catch(err=>{
+                console.log('error saving post')
+             })
+            
+        } catch (error) {
+            console.log(error)
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// const submitPost =  async(req,res)=>{
+
+//     const {postTitle , postBody , createdBy} = 
+// }
 
 module.exports = {
     getUser,
     saveUser,
     signInUser,
     signUpUser,
-    userDashboard
+    userDashboard,
+    addPost,
+    submitPost
 }

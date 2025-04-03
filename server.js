@@ -62,7 +62,7 @@ const userMiddleware = (req,res,next) =>{
 
 
 app.use(session({  
-    secret: 'hello ganza',
+    secret: 'hello ganza', 
     resave: false,  
     saveUninitialized: true, 
     store: MongoStore.create({  
@@ -78,9 +78,11 @@ app.get('/adminDashboard',authMiddleware,routerPath)
 app.get('/userDashboard',userMiddleware,routerPath)
 app.get('/signin/user',routerPath)
 app.get('/signup/user',routerPath)
+app.get('/add-post',userMiddleware,routerPath)
 
 //post
 app.post('/signin/admin',routerPath)
 app.post('/signup/admin',routerPath)
 app.post('/signin/user',routerPath)
 app.post('/signup/user',routerPath)
+app.post('/add-post',routerPath)

@@ -28,7 +28,7 @@ const saveAdmin = async (req, res) => {
             name: username,  
             password: hashedPassword,  
         })
-        res.status(201).json({ message: "Admin created", admin });  
+        res.status(201).redirect('/signin/admin') 
     } catch (error) {
         if (error.code === 11000) {  
             return res.status(409).json({ message: "Admin already in use" });  
