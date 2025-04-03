@@ -39,8 +39,14 @@ app.use(session({
 }));  
 //routes
 
-app.get('/signin',routerPath)
-app.get('/signup',routerPath)
+//get
+app.get('/signin/admin',routerPath)
+app.get('/signup/admin',routerPath)
 app.get('/adminDashboard',routerPath)
-app.post('/signin',routerPath)
-app.post('/signup',routerPath)
+app.get('/userDashboard',routerPath)
+
+//post
+app.post('/signin/admin',routerPath)
+app.post('/signup/admin',routerPath)
+app.post('/signin/user',routerPath)
+app.post('/signup/user',routerPath)
