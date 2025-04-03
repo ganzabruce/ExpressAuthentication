@@ -1,6 +1,6 @@
 const User = require('../models/User')
-const jwt= require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 const JWT_SECRET = process.env.JWT_SECRET
 
 //admin
@@ -52,9 +52,9 @@ const getUser= async(req,res) =>{
         if (!isPasswordvalid) {
             return res.json({message:"invalid password"})
         }
-        const token = jwt.sign({userId: user._id},JWT_SECRET)
-        res.cookie('token',token,{httpOnly:true})
-        res.json({message : "logged in as user "})
+        const userToken = jwt.sign({userId: user._id},JWT_SECRET)
+        res.cookie('userToken',userToken,{httpOnly:true})
+        res.status(200).redirect('/userDashboard')
         
     }catch(err){
         console.log(err)

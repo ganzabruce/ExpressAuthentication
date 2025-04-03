@@ -4,6 +4,7 @@ const app =  express()
 const cookieParser =  require('cookie-parser')
 const mongoose =  require('mongoose')
 const MongoStore = require('connect-mongo')
+const jwt = require('jsonwebtoken')
 const session = require('express-session')
 const routerPath =  require('./routes/router')
 PORT = process.env.PORT
@@ -39,7 +40,8 @@ const authMiddleware = (req,res,next) =>{
         req.userId = verifiedAdmin.userId
         next()
     } catch (error) {
-        res.status(401).json({message: "unauthorized "})
+        console.log(error)
+        return res.status(401).json({message: "unauthorized user"})
     }
 }
 
@@ -53,7 +55,8 @@ const userMiddleware = (req,res,next) =>{
         req.userId = verifiedUser.userId
         next()
     } catch (error) {
-        res.status(401).json({message: "unauthorized "})
+        console.log(error)
+        return res.status(401).json({message: "unauthorized "})
     }
 }
 
