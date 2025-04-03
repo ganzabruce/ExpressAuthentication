@@ -20,7 +20,6 @@ router.get('/userDashboard',userControllers.userDashboard)
 //post
 router.post('/signin/admin',adminControllers.getAdmin)
 router.post('/signup/admin',adminControllers.saveAdmin)
-
 router.post('/signin/user',userControllers.getUser)
 router.post('/signup/user',userControllers.saveUser)
 module.exports = router 

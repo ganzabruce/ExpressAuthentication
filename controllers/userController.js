@@ -1,6 +1,4 @@
-const mongoose =  require('mongoose')
 const User = require('../models/User')
-const express  =  require('express')
 const jwt= require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const JWT_SECRET = process.env.JWT_SECRET
@@ -56,7 +54,7 @@ const getUser= async(req,res) =>{
         }
         const token = jwt.sign({userId: user._id},JWT_SECRET)
         res.cookie('token',token,{httpOnly:true})
-        res.redirect('userDashboard')
+        res.json({message : "logged in as user "})
         
     }catch(err){
         console.log(err)
