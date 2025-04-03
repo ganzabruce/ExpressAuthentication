@@ -100,11 +100,15 @@ const submitPost = async (req,res) =>{
     }
 }
 
-// const submitPost =  async(req,res)=>{
-
-//     const {postTitle , postBody , createdBy} = 
-// }
-
+const getPostDetails = async(req,res)=>{
+    const postId = req.params.id
+    try {
+        const post = await Post.findById(id)
+        res.render('postDetails',{post})
+    } catch (error) {
+        
+    }
+}
 module.exports = {
     getUser,
     saveUser,
@@ -112,5 +116,6 @@ module.exports = {
     signUpUser,
     userDashboard,
     addPost,
-    submitPost
+    submitPost,
+    getPostDetails
 }

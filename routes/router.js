@@ -12,6 +12,7 @@ router.get('/signup/admin',adminControllers.signUpAdmin)
 router.get('/signin/user',userControllers.signInUser)
 router.get('/signup/user',userControllers.signUpUser)
 router.get('/add-post',userControllers.addPost)
+router.get('/post/:id',userControllers.getPostDetails)
 
 //pages
 router.get('/adminDashboard',adminControllers.adminDashboard)

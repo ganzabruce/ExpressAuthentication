@@ -79,6 +79,7 @@ app.get('/userDashboard',userMiddleware,routerPath)
 app.get('/signin/user',routerPath)
 app.get('/signup/user',routerPath)
 app.get('/add-post',userMiddleware,routerPath)
+app.get('/post/:id',routerPath)
 
 //post
 app.post('/signin/admin',routerPath)
